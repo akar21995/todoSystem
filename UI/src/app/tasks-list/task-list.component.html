@@ -1,0 +1,32 @@
+<!-- src/app/todo-list/todo-list.component.html -->
+<div>
+  <h1>Todo List</h1>
+  <input [(ngModel)]="newTodoTitle" placeholder="New Todo" class="display">
+  <button (click)="addTodo()" class="display">Add</button>
+  <input type="file" (change)="uploadCSV($event)" class="display">
+  <button (click)="downloadCSV()" class="display">Download CSV</button>
+
+  <div style="float: inline-end;">
+    <button (click)="getAllToDos();" class="display">Clear</button>
+
+    <h3>Status Filter</h3>
+    <select (change)="statusFilter($event)">
+      <option *ngFor="let s of statusList" [value]="s"> {{ s }} </option>
+    </select>
+
+    <h3>Id Filter</h3>
+    <input class="display" (change)="idFilter($event)">
+  </div>
+
+  <ul>
+    <li *ngFor="let todo of todos | async" class="display">
+      <input [(ngModel)]="todo.taskId" [disabled]="true" class="display">
+      <input [(ngModel)]="todo.title" class="display">
+      <select [(ngModel)]="todo.status" class="display">
+        <option *ngFor="let s of statusList" [value]="s"> {{ s }} </option>
+      </select>
+      <button (click)="updateTodo(todo)" class="display">Update</button>
+      <button (click)="deleteTodo(todo.taskId)" class="display">Delete</button>
+    </li>
+  </ul>
+</div>
